@@ -14,7 +14,7 @@ typedef struct Behavior Behavior;
 #pragma incomplete Behavior
 
 typedef struct BehaviorState BehaviorState;
-#pragma incomplete Behavior
+#pragma incomplete BehaviorState
 
 typedef struct BehaviorNode BehaviorNode;
 #pragma incomplete BehaviorNode
