@@ -420,7 +420,7 @@ void bad(char *fmt, ...);
 void dbg(char *fmt, ...);
 void uiinit(char *name);
 void uirun(void);
-int uibt(void *a);
+int uibt(void *ctx, void *a);
 void uiredraw(int justui);
 
 /* util.c */

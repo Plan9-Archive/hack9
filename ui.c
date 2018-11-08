@@ -962,7 +962,7 @@ uirun(void)
 }
 
 int
-uibt(void *a)
+uibt(void *ctx, void *a)
 {
 	USED(a);
 	uirun();

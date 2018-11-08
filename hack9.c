@@ -175,7 +175,7 @@ threadmain(int argc, char *argv[])
 	t->monst = player;
 	setflagat(level, player->pt, Fhasmonster);
 
-	player->bt = btroot(btleaf("input", uibt));
+	player->bt = btroot(btleaf("input", uibt, nil));
 	player->bs = btstatenew(player->bt);
 
 	if(debug > 0){

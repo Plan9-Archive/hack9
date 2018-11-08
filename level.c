@@ -13,7 +13,7 @@ static Behavior *behavior;
 
 /* AI function for levels */
 static int
-lexec(void *v)
+lexec(void *ctx, void *v)
 {
 	int i, j, n;
 	Point p, np, *neigh;
@@ -80,7 +80,7 @@ linit(void)
 {
 	BehaviorNode *root;
 
-	root = btleaf("level", lexec);
+	root = btleaf("level", lexec, nil);
 
 	assert(root != nil);
 

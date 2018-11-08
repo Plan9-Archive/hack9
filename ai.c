@@ -131,7 +131,7 @@ OOM(void)
 }
 
 static int
-wander(void *v)
+wander(void *ctx, void *v)
 {
 	int try;
 	Point p;
@@ -203,7 +203,7 @@ planpathkey(Monster *m, char *dst, char *offset, char *data)
 }
 
 static int
-planpathwander(void *v)
+planpathwander(void *ctx, void *v)
 {
 	Monster *m;
 
@@ -213,7 +213,7 @@ planpathwander(void *v)
 }
 
 static int
-planpathgetstuff(void *v)
+planpathgetstuff(void *ctx, void *v)
 {
 	Monster *m;
 
@@ -223,7 +223,7 @@ planpathgetstuff(void *v)
 }
 
 static int
-planpathattack(void *v)
+planpathattack(void *ctx, void *v)
 {
 	Monster *m;
 
@@ -233,7 +233,7 @@ planpathattack(void *v)
 }
 
 static int
-planpathguard(void *v)
+planpathguard(void *ctx, void *v)
 {
 	Monster *m;
 
@@ -281,7 +281,7 @@ walktoinner(Monster *m, char *data)
 }
 
 static int
-walktowander(void *v)
+walktowander(void *ctx, void *v)
 {
 	Monster *m;
 
@@ -291,7 +291,7 @@ walktowander(void *v)
 }
 
 static int
-walktogetstuff(void *v)
+walktogetstuff(void *ctx, void *v)
 {
 	Monster *m;
 	m = v;
@@ -299,7 +299,7 @@ walktogetstuff(void *v)
 }
 
 static int
-walktoattack(void *v)
+walktoattack(void *ctx, void *v)
 {
 	Monster *m;
 	m = v;
@@ -307,7 +307,7 @@ walktoattack(void *v)
 }
 
 static int
-walktoguard(void *v)
+walktoguard(void *ctx, void *v)
 {
 	Monster *m;
 	m = v;
@@ -395,7 +395,7 @@ checkenemy2(Monster *m, Level *l, Point p)
 }
 
 static int
-findenemy(void *v)
+findenemy(void *ctx, void *v)
 {
 	Monster *m, *target;
 	AiData *dtgt;
@@ -416,7 +416,7 @@ findenemy(void *v)
 }
 
 static int
-targetenemy(void *v)
+targetenemy(void *ctx, void *v)
 {
 	Monster *m;
 	AiData *dtgt, *dst, *off;
@@ -440,7 +440,7 @@ targetenemy(void *v)
 }
 
 static int
-attackenemy(void *v)
+attackenemy(void *ctx, void *v)
 {
 	Monster *m, *target;
 	AiData *dtgt;
@@ -470,9 +470,9 @@ bnidle(void)
 {
 	BehaviorNode *bnwfind, *bnplanpath, *bnwalkto;
 
-	bnwfind = btleaf("wander find", wander);
-	bnplanpath = btleaf("wander plan path", planpathwander);
-	bnwalkto = btleaf("wander move", walktowander);
+	bnwfind = btleaf("wander find", wander, nil);
+	bnplanpath = btleaf("wander plan path", planpathwander, nil);
+	bnwalkto = btleaf("wander move", walktowander, nil);
 
 	btsetguard(bnwalkto, bnplanpath);
 	btsetguard(bnplanpath, bnwfind);
@@ -515,7 +515,7 @@ checkitem(Monster *m, Level *l, Point p)
 }
 
 static int
-findstuff(void *v)
+findstuff(void *ctx, void *v)
 {
 	Monster *m;
 	AiData *itgt, *idst, *ioff;
@@ -533,7 +533,7 @@ findstuff(void *v)
 }
 
 static int
-ontop(void *v)
+ontop(void *ctx, void *v)
 {
 	Monster *m;
 	AiData *idst;
@@ -548,7 +548,7 @@ ontop(void *v)
 }
 
 static int
-pickup(void *v)
+pickup(void *ctx, void *v)
 {
 	Monster *m;
 	AiData *itgt;
@@ -585,10 +585,10 @@ bngetstuff(void)
 	BehaviorNode *bnpickup;
 	BehaviorNode *bnget;
 
-	bnifind = btleaf("getstuff find", findstuff);
-	bnontop = btleaf("ontop of stuff", ontop);
-	bnplanpath = btleaf("getstuff plan path", planpathgetstuff);
-	bnwalkto = btleaf("getstuff move", walktogetstuff);
+	bnifind = btleaf("getstuff find", findstuff, nil);
+	bnontop = btleaf("ontop of stuff", ontop, nil);
+	bnplanpath = btleaf("getstuff plan path", planpathgetstuff, nil);
+	bnwalkto = btleaf("getstuff move", walktogetstuff, nil);
 
 	/* either we are on top of our target, or walk to it */
 	bnroute = btparallel("getstuff route", 1, 2,
@@ -596,7 +596,7 @@ bngetstuff(void)
 		btsequence("getstuff walk", bnplanpath, bnwalkto, nil),
 		nil);
 
-	bnpickup = btleaf("getstuff pickup", pickup);
+	bnpickup = btleaf("getstuff pickup", pickup, nil);
 
 	bnget = btsequence("getstuff", bnroute, bnpickup, nil);
 
@@ -623,12 +623,12 @@ bnattack(void)
 	BehaviorNode *bnplanpath, *bnmove, *bnhit;
 	BehaviorNode *bnatk;
 
-	bnfind = btleaf("find enemy", findenemy);
+	bnfind = btleaf("find enemy", findenemy, nil);
 
-	bntarget = btleaf("target enemy", targetenemy);
-	bnplanpath = btleaf("attack plan path", planpathattack);
-	bnmove = btleaf("move to enemy", walktoattack);
-	bnhit = btleaf("hit enemy", attackenemy);
+	bntarget = btleaf("target enemy", targetenemy, nil);
+	bnplanpath = btleaf("attack plan path", planpathattack, nil);
+	bnmove = btleaf("move to enemy", walktoattack, nil);
+	bnhit = btleaf("hit enemy", attackenemy, nil);
 
 	bnatk = btsequence("attack", bnplanpath, bnmove, bnhit, nil);
 	btsetguard(bnatk, bntarget);
@@ -639,7 +639,7 @@ bnattack(void)
 }
 
 static int
-haveequip(void *v)
+haveequip(void *ctx, void *v)
 {
 	int i, typ;
 	Monster *m;
@@ -665,7 +665,7 @@ haveequip(void *v)
 }
 
 static int
-equipstuff(void *v)
+equipstuff(void *ctx, void *v)
 {
 	int slot;
 	Monster *m;
@@ -688,8 +688,8 @@ bnequip(void)
 {
 	BehaviorNode *bnhave, *bnuse;
 
-	bnhave = btleaf("have equip", haveequip);
-	bnuse = btleaf("equip item", equipstuff);
+	bnhave = btleaf("have equip", haveequip, nil);
+	bnuse = btleaf("equip item", equipstuff, nil);
 
 	btsetguard(bnuse, bnhave);
 
@@ -701,7 +701,7 @@ enum {
 };
 
 static int
-guardcheck(void *v)
+guardcheck(void *ctx, void *v)
 {
 	Monster *m;
 	Point ptgt;
@@ -756,9 +756,9 @@ btguard(void)
 {
 	BehaviorNode *bnshouldguard, *bnplanpath, *bnwalkto;
 
-	bnshouldguard = btleaf("guard check", guardcheck);
-	bnplanpath = btleaf("guard plan path", planpathguard);
-	bnwalkto = btleaf("guard move", walktoguard);
+	bnshouldguard = btleaf("guard check", guardcheck, nil);
+	bnplanpath = btleaf("guard plan path", planpathguard, nil);
+	bnwalkto = btleaf("guard move", walktoguard, nil);
 
 	btsetguard(bnwalkto, bnplanpath);
 	btsetguard(bnplanpath, bnshouldguard);
