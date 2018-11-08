@@ -49,6 +49,17 @@ btaddchild(BehaviorBranch *node, BehaviorNode *child)
 	return 0;
 }
 
+int
+btaddbranch(BehaviorNode *node, BehaviorNode *child)
+{
+	assert(node->type == BT_SEQUENCE ||
+			node->type == BT_PRIORITY ||
+			node->type == BT_PARALLEL ||
+			node->type == BT_DYNGUARD);
+
+	return btaddchild((BehaviorBranch*)node, child);
+}
+
 static int
 btbranch(BehaviorBranch *node, va_list ap)
 {

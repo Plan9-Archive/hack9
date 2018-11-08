@@ -43,6 +43,9 @@ BehaviorNode *btpriority(char*, ...);
 BehaviorNode *btparallel(char*, int, int, ...);
 BehaviorNode *btdynguard(char*, ...);
 
+/* add child to one of the above */
+int btaddbranch(BehaviorNode*, BehaviorNode*);
+
 /* decorators */
 BehaviorNode *btinvert(char*, BehaviorNode*);
 
