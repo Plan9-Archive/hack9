@@ -249,7 +249,14 @@ btfreetree(BehaviorNode *node)
 }
 
 void
+btfreenode(BehaviorNode *node)
+{
+	return btfreetree(node);
+}
+
+void
 btfree(Behavior *b)
 {
 	btfreetree(b->root);
+	free(b);
 }

@@ -55,6 +55,7 @@ void btsetguard(BehaviorNode*, BehaviorNode*);
 /* set end function for a node */
 void btsetend(BehaviorNode*, void (*)(void*));
 
+void btfreenode(BehaviorNode*);
 void btfree(Behavior*);
 int bttick(Behavior*, BehaviorState*, void*);
 
