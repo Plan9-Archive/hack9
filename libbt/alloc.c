@@ -251,7 +251,7 @@ btfreetree(BehaviorNode *node)
 void
 btfreenode(BehaviorNode *node)
 {
-	return btfreetree(node);
+	btfreetree(node);
 }
 
 void
