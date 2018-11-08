@@ -11,12 +11,6 @@ struct Agent {
 };
 
 int
-rstate(void)
-{
-	return nrand(TASKSUCCESS)+1;
-}
-
-int
 pstate(int state)
 {
 	print(" -> %s\n", btstatenames[state]);

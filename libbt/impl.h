@@ -42,7 +42,7 @@ struct BehaviorBranch {
 	BehaviorNode node;
 
 	int childcount;
-	BehaviorNode **children;	
+	BehaviorNode **children;
 };
 
 typedef struct BehaviorBranchState BehaviorBranchState;
