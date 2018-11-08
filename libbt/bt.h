@@ -8,7 +8,12 @@ enum {
 
 extern char *btstatenames[TASKMAX];
 
-typedef int (*BehaviorAction)(void*);
+/* BehaviorAction is a leaf function.
+ *
+ * ctx - per-leaf context
+ * v - data passed to bttick
+ */
+typedef int (*BehaviorAction)(void *ctx, void *v);
 
 typedef struct Behavior Behavior;
 #pragma incomplete Behavior
@@ -24,8 +29,13 @@ Behavior *btroot(BehaviorNode *root);
 BehaviorState *btstatenew(Behavior*);
 void btstatefree(BehaviorState*, void *agent);
 
-/* leaf action */
-BehaviorNode *btleaf(char*, BehaviorAction);
+/* btleaf creates a new BehaviorNode leaf.
+ *
+ * name - string name, used for debugging
+ * action - BehaviorAction function called when ticked
+ * ctx - per-leaf context passed to action
+ */
+BehaviorNode *btleaf(char *name, BehaviorAction action, void *ctx);
 
 /* control flow */
 BehaviorNode *btsequence(char*, ...);

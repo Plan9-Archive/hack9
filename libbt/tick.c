@@ -47,7 +47,7 @@ tickleaf(BehaviorNode *node, BehaviorState *bs, void *agent)
 
 	leaf = (BehaviorLeaf*)node;
 
-	return leaf->action(agent);
+	return leaf->action(leaf->ctx, agent);
 }
 
 static int

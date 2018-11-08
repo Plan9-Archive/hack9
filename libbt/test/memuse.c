@@ -42,7 +42,7 @@ memuse(void)
 }
 
 static int
-nop(void *a)
+nop(void *ctx, void *a)
 {
 	return TASKSUCCESS;
 }
@@ -53,9 +53,9 @@ mkbt(void)
 	BehaviorNode *one, *two, *three;
 	BehaviorNode *root;
 
-	one = btleaf("one", nop);
-	two = btleaf("two", nop);
-	three = btleaf("three", nop);
+	one = btleaf("one", nop, nil);
+	two = btleaf("two", nop, nil);
+	three = btleaf("three", nop, nil);
 
 	root = btsequence("root", one, two, three, nil);
 

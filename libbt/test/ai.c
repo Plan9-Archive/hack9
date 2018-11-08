@@ -25,7 +25,7 @@ pstate(int state)
 
 /* find a random place to goto */
 int
-wpfind(void *a)
+wpfind(void *ctx, void *a)
 {
 	Agent *agent = a;
 
@@ -36,7 +36,7 @@ wpfind(void *a)
 
 /* find an enemy */
 int
-afind(void *a)
+afind(void *ctx, void *a)
 {
 	Agent *agent = a;
 
@@ -52,7 +52,7 @@ afind(void *a)
 
 /* move towards the enemy */
 int
-amove(void *a)
+amove(void *ctx, void *a)
 {
 	Agent *agent = a;
 
@@ -86,7 +86,7 @@ amove(void *a)
 
 /* simulate hitting an enemy */
 int
-ahit(void *a)
+ahit(void *ctx, void *a)
 {
 	print("hit");
 
@@ -103,17 +103,17 @@ mkbt(void)
 	BehaviorNode *attack, *idle;
 	BehaviorNode *root;
 
-	find = btleaf("find enemy", afind);
-	move = btleaf("move to target", amove);
+	find = btleaf("find enemy", afind, nil);
+	move = btleaf("move to target", amove, nil);
 
 	/* die yankee pig dog */
-	hit = btleaf("hit enemy", ahit);
+	hit = btleaf("hit enemy", ahit, nil);
 
 	/* combat ai is a simple search and destroy */
 	attack = btsequence("attack enemy", find, move, hit, nil);
 
-	wfind = btleaf("wander find", wpfind);
-	wmove = btleaf("wander move", amove);
+	wfind = btleaf("wander find", wpfind, nil);
+	wmove = btleaf("wander move", amove, nil);
 	wander = btsequence("wander", wfind, wmove, nil);
 
 	/* find is added here so control will pop out of

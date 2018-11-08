@@ -14,7 +14,7 @@ btinitnode(BehaviorNode *node, short type, char *name)
 }
 
 BehaviorNode*
-btleaf(char *name, BehaviorAction action)
+btleaf(char *name, BehaviorAction action, void *ctx)
 {
 	BehaviorLeaf *leaf;
 
@@ -29,6 +29,7 @@ btleaf(char *name, BehaviorAction action)
 	btinitnode(&leaf->node, BT_LEAF, name);
 
 	leaf->action = action;
+	leaf->ctx = ctx;
 	return (BehaviorNode*)leaf;
 }
 

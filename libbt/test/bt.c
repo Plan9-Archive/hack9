@@ -24,7 +24,7 @@ pstate(int state)
 }
 
 int
-findfoodnearby(void *a)
+findfoodnearby(void *ctx, void *a)
 {
 	int r;
 	Agent *agent = a;
@@ -41,10 +41,10 @@ findfoodnearby(void *a)
 	return pstate(TASKRUNNING);
 }
 
-int movetofood(void *a) { print("movetofood"); return rstate(); }
+int movetofood(void *ctx, void *a) { print("movetofood"); return rstate(); }
 
 int
-pickupfood(void *a)
+pickupfood(void *ctx, void *a)
 {
 	Agent *agent = a;
 
@@ -54,10 +54,10 @@ pickupfood(void *a)
 	return pstate(TASKSUCCESS);
 }
 
-int goout(void *a) { print("goout"); return rstate(); }
+int goout(void *ctx, void *a) { print("goout"); return rstate(); }
 
 int
-eatfood(void *a)
+eatfood(void *ctx, void *a)
 {
 	Agent *agent = a;
 
@@ -81,11 +81,11 @@ mkbt(void)
 	BehaviorNode *find, *moveto, *pickup, *gout, *eat;
 	BehaviorNode *bnear, *get, *root;
 
-	find = btleaf("find food", findfoodnearby);
-	moveto = btleaf("move to food", movetofood);
-	pickup = btleaf("pickup food", pickupfood);
-	gout = btleaf("go out", goout);
-	eat = btleaf("eat food", eatfood);
+	find = btleaf("find food", findfoodnearby, nil);
+	moveto = btleaf("move to food", movetofood, nil);
+	pickup = btleaf("pickup food", pickupfood, nil);
+	gout = btleaf("go out", goout, nil);
+	eat = btleaf("eat food", eatfood, nil);
 
 	bnear = btsequence("nearby food", find, moveto, pickup, nil);
 	get = btpriority("get food", bnear, gout, nil);

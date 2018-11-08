@@ -29,6 +29,7 @@ typedef struct BehaviorLeaf BehaviorLeaf;
 struct BehaviorLeaf {
 	BehaviorNode node;
 	BehaviorAction action;
+	void *ctx;
 };
 
 typedef struct BehaviorLeafState BehaviorLeafState;
