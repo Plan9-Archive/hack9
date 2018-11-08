@@ -9,8 +9,8 @@ clean nuke:V:
 
 test:QV:
 	cd test
-	mk -f mk.p9p clean
-	mk -f mk.p9p all
+	mk clean
+	mk all
 	for t in $O.*; do
 		echo $t...
 		./$t

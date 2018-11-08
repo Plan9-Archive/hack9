@@ -1,8 +1,9 @@
-# hack9	#
+# hack9
 
-## running ##
+## running
 
-### plan9 ###
+### plan9
+
 * run:
 
 ```
@@ -12,21 +13,23 @@ cd
 hg clone https://bitbucket.org/mischief/hack9 hack9
 cd hack9
 mk
-8.out
+./8.out
 ```
 
-### unix ###
+### unix
+
 * install [plan9port](https://github.com/9fans/plan9port).
 * make sure `$PLAN9` is	set.
 * make sure `$PLAN9/bin` is in `$PATH`.
 * run:
+
 ```
 #!sh
 
 cd
 hg clone https://bitbucket.org/mischief/hack9 hack9
 cd hack9
-mk -f mk.p9p
+mk
 ./o.hack9
 ```
 

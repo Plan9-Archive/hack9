@@ -1,20 +1,4 @@
-</$objtype/mkfile
+SYS=`{test -e /dev/cons && echo plan9 || echo posix}
 
-<mk.common
+<mk.$SYS
 
-</sys/src/cmd/mklib
-
-nuke clean:V:
-	@{ cd test; mk $target }
-	rm -f *.[$OS] [$OS].out $LIB
-
-test:QV:	$LIB
-	@{
-		cd test
-		mk clean
-		mk all
-		for(t in $O.map*){
-			echo $t...
-			./$t
-		}
-	}

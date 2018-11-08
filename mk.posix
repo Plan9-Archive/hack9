@@ -12,15 +12,15 @@ LIB=$LIBMAP $LIBBT
 
 $LIBMAP:
 	cd libmap
-	mk -f mk.p9p
+	mk
 
 $LIBBT:
 	cd libbt
-	mk -f mk.p9p
+	mk
 
 clean:V:
-	cd libmap; mk -f mk.p9p clean; cd ..
-	cd libbt; mk -f mk.p9p clean; cd ..
+	cd libmap; mk clean; cd ..
+	cd libbt; mk clean; cd ..
 	rm -f *.[$OS] [$OS].out *.acid $TARG
 
 $O.alg:	algtest.$O alg.$O

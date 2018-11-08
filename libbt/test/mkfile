@@ -1,9 +1,4 @@
-</$objtype/mkfile
+SYS=`{test -e /dev/cons && echo plan9 || echo posix}
 
-TARG=`{ls *.c | sed 's/\.c//g'}
-
-CFLAGS=-N $CFLAGS -I..
-LIB=../libbt.$O.a
-
-</sys/src/cmd/mkmany
+<mk.$SYS
 
