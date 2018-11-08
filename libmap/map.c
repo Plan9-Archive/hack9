@@ -99,6 +99,8 @@ mapfree(Map *m)
 			e = next;
 		}
 	}
+
+	free(m);
 }
 
 static Entry*
