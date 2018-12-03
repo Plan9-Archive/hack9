@@ -120,18 +120,18 @@ neighbor(Rectangle in, Point p, int *n)
 void
 shuffle(void *base, long nel, long width)
 {
-	unsigned char *b, *swap1, *swap2;
+	unsigned char *b, *swap1, *swap2, tmp;
 	long i, j, k;
 	b = base;
 	for(i = nel - 1; i > 0; i--){
 		j = nrand(i);
 		swap1 = &b[i*width];
 		swap2 = &b[j*width];
-		for(k = 0; k < width; k++){
-			*swap1 ^= *swap2;
-			*swap2 ^= *swap1;
-			*swap1++ ^= *swap2++;
+
+		for(k = width; --k; ){
+			tmp = *swap1;
+			*swap1++ = *swap2;
+			*swap2++ = tmp;
 		}
 	}
 }
-
